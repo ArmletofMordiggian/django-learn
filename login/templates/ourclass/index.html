@@ -1,0 +1,182 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <!--link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/ie10-viewport-bug-workaround.css' %}">
+
+    <!-- Custom styles for this template -->
+    <!--link rel="stylesheet" href="{% static 'bootstrap/css/dashboard.css' %}"-->
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script-->
+
+  </head>
+
+  <body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header">
+                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Forever 075</a>
+                </div>
+                
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav ">
+                        <li class="active">
+                             <a href="#">Boys</a>
+                        </li>
+                        <li>
+                             <a href="#">Girls</a>
+                        </li>
+                        <li class="dropdown">
+                             <a class="dropdown-toggle" href="#" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                     <a href="#">Action</a>
+                                </li>
+                                <li>
+                                     <a href="#">Another action</a>
+                                </li>
+                                <li>
+                                     <a href="#">Something else here</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                     <a href="#">Separated link</a>
+                                </li>
+                                <li class="divider">
+                                </li>
+                                <li>
+                                     <a href="#">One more separated link</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input class="form-control" type="text" />
+                        </div> <button class="btn btn-default" type="submit">search</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                    </ul>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="btn-group">
+                 <button class="btn btn-default">Action</button> <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                {% for member in member_list %}
+                    <li>
+                         <a href="{{ member.get_absolute_url }}">{{ member.user_name }}</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+            <!--form method='post'>
+                {% csrf_token %}
+                        <h4>
+                            时间:<select name='ispdateform'>
+                               {% for line in dates %}
+                               <option value="{{line.ktime}}">{{line.ktime}}</option>
+                               {% endfor %}
+                               </select>
+                               <input type="submit" value="提交">
+                        </h4>
+            </form-->
+            <form class="navbar-form navbar-left" role="search" method='post'>
+            {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="nameform" required>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+            <div class="row">
+            {% for member in member_list %}
+                <div class="col-md-3 col-sm-offset-1 col-md-offset-1">
+                    <div class="thumbnail">
+                        <!--img alt="300x200" src="{% static 'img/包林斌.jpg' %}" /-->
+                        <img alt="300x200" src="../../static/img/{{ member.user_name }}.jpg" />
+                        <div class="caption">
+                            <h3>
+                                {{ member.user_name }}
+                            </h3>
+                            <p>
+                                现居{{ member.domicile }} {{ member.bedroom }} 职业:{{ member.work }}
+                            </p>
+                            <p>名言金句:{{ member.description }}</p>
+                            <p>
+                                 <a class="btn btn-primary" href="{{ member.get_absolute_url }}">个人主页</a> <a class="btn" href="#">Action</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+{% empty %}
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-offset-1 col-md-offset-1">
+                    <div class="thumbnail">
+                        <img alt="300x200" src="{% static 'img/default4.jpg' %}" />
+                        <div class="caption">
+                            <h3>
+                                暂时没有成员
+                            </h3>
+                            <p>
+                                地区 工作 爱好 描述信息等
+                            </p>
+                            <p>
+                                 <a class="btn btn-primary" href="#">Action</a> <a class="btn" href="#">Action</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endfor %}
+</div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!--script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <!--script src="../../assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
+  </body>
+</html>
